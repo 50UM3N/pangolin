@@ -9,14 +9,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import {
-    BrandGithub,
-    BrandInstagram,
-    BrandLinkedin,
-    BrandTwitter,
-    BrandYoutube,
-} from "tabler-icons-react";
-interface props {}
+
 const useStyles = createStyles((theme) => ({
     inner: {
         display: "flex",
@@ -88,17 +81,16 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-const links = [
-    { link: "/", label: "Home" },
-    { link: "/about", label: "About" },
-    { link: "/projects", label: "Project" },
-];
+interface props {
+    links: NavLinks;
+    socialLinks: SocialLinks;
+}
 
-const Nav: React.FC<props> = ({}) => {
+const Nav: React.FC<props> = ({ links, socialLinks }) => {
     const router = useRouter();
     const { classes, cx } = useStyles();
     const items = links.map((link) => (
-        <div key={link.label}>
+        <div key={Math.random()}>
             <Link href={link.link}>
                 <a
                     className={cx(classes.link, {
@@ -127,15 +119,11 @@ const Nav: React.FC<props> = ({}) => {
                     position="right"
                     noWrap
                 >
-                    <ActionIcon size="lg">
-                        <BrandLinkedin size={18} />
-                    </ActionIcon>
-                    <ActionIcon size="lg">
-                        <BrandGithub size={18} />
-                    </ActionIcon>
-                    <ActionIcon size="lg">
-                        <BrandInstagram size={18} />
-                    </ActionIcon>
+                    {socialLinks.map((socialLink) => (
+                        <ActionIcon key={Math.random()} size="lg">
+                            {socialLink.icon}
+                        </ActionIcon>
+                    ))}
                 </Group>
             </Container>
         </Header>
