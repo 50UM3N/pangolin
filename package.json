@@ -13,10 +13,13 @@
     "@mantine/hooks": "^4.2.4",
     "@mantine/next": "^4.2.4",
     "@mantine/notifications": "^4.2.4",
+    "@types/aos": "^3.0.4",
+    "aos": "^2.3.4",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.3.1",
+    "sharp": "^0.30.4",
     "tabler-icons-react": "^1.48.0"
   },
   "devDependencies": {

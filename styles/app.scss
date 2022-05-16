@@ -3,3 +3,92 @@
     margin: 0;
     box-sizing: border-box;
 }
+$transion_time: 100ms;
+$transition_delay: 100ms;
+[class*="_pangolin__section"] {
+    opacity: 0;
+}
+// First the header load and display the fade animation 200ms
+// Total transiton time is
+/*
+    |-------|------| 200 ms
+                   |------|------| 400ms
+    Total Time 600ms
+*/
+._pangolin__section__header {
+    animation: fade $transion_time * 2 ease-in;
+    animation-fill-mode: forwards;
+    $starting_point: 2;
+    // after the header load the links load with fade animation for 100ms with a delay
+    /**
+        |-------|-------| 200 ms
+                |-------|------| 200ms
+                        |-------------| 200 ms
+        Total Time 400ms
+    */
+    ._header__nav {
+        @for $i from 1 through 3 {
+            &__links:nth-child(#{$i}) {
+                opacity: 0;
+                animation: fade $transion_time * 2 ease-in;
+                animation-delay: $transition_delay * ($starting_point + $i);
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+    ._header__title {
+        opacity: 0;
+        animation: fade $transion_time * 2 ease-in;
+        animation-delay: $transition_delay * 2;
+        animation-fill-mode: forwards;
+    }
+    /**
+        |-------|------| 200 ms
+                |-------|------| 200ms
+                        |-------------| 200 ms
+        Total Time 400ms
+    */
+    ._header__social {
+        @for $i from 1 through 3 {
+            &__links:nth-child(#{$i}) {
+                opacity: 0;
+                animation: fade $transion_time * 2 ease-in;
+                animation-delay: $transition_delay * ($starting_point + $i);
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+}
+// After all the content of the haeder loader with the time 600ms then added extra breath 200ms
+//
+._pangolin__section__intro,
+._pangolin__section__about,
+._pangolin__section__career,
+._pangolin__section__projects,
+._pangolin__section__contact,
+._pangolin__section__footer {
+    animation: fade $transion_time * 2 ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: $transition_delay * 10;
+}
+
+._pangolin__section__social_links {
+    animation: fade $transion_time * 2 ease-in;
+    animation-fill-mode: forwards;
+    animation-delay: $transition_delay * 20;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+._pangolin__section__intro {
+    min-height: calc(100vh - 24px - (64px * 2));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

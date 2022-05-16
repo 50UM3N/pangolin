@@ -8,8 +8,6 @@ import {
     createStyles,
     Grid,
     Group,
-    Image,
-    List,
     Text,
     Title,
     Transition,
@@ -32,8 +30,16 @@ import Footer from "../components/Footer";
 import ContactUs from "../components/ContactUs";
 import { useWindowScroll } from "@mantine/hooks";
 import RepoCard from "../components/RepoCard";
+import logo from "../public/logo.png";
+import me from "../public/me1x1.jpeg";
+import Image from "next/image";
+
+const AnimationDelay = 1000;
 
 const useStyle = createStyles((theme) => ({
+    image: {
+        borderRadius: theme.radius.md,
+    },
     badge: {
         ".mantine-Badge-leftSection": {
             display: "flex",
@@ -72,16 +78,19 @@ const useStyle = createStyles((theme) => ({
 
 const socialLinks: SocialLinks = [
     {
+        id: Math.random(),
         name: "Linkedin",
         url: "",
         icon: <BrandLinkedin size={20} />,
     },
     {
+        id: Math.random(),
         name: "GitHub",
         url: "",
         icon: <BrandGithub size={20} />,
     },
     {
+        id: Math.random(),
         name: "Instagram",
         url: "",
         icon: <BrandInstagram size={20} />,
@@ -99,9 +108,9 @@ const skills = [
 ];
 
 const links: NavLinks = [
-    { link: "/", label: "Home" },
-    { link: "/about", label: "About" },
-    { link: "/projects", label: "Project" },
+    { id: Math.random(), link: "/", label: "Home" },
+    { id: Math.random(), link: "/about", label: "About" },
+    { id: Math.random(), link: "/projects", label: "Project" },
 ];
 
 const Home: React.FC = () => {
@@ -109,42 +118,66 @@ const Home: React.FC = () => {
     const [scroll, scrollTo] = useWindowScroll();
     return (
         <>
-            <Nav links={links} socialLinks={socialLinks} />
-            <Container my={64}>
+            <Nav
+                links={links}
+                socialLinks={socialLinks}
+                className="_pangolin__section__header"
+            />
+            <Container py={64} className="_pangolin__section__intro">
                 <Grid gutter={32}>
-                    <Col xs={4}>
+                    <Col
+                        xs={4}
+                        data-aos="fade-up"
+                        data-aos-delay={AnimationDelay}
+                        data-aos-duration="1000"
+                    >
                         <Image
-                            src="/logo.png"
+                            priority
+                            className={classes.image}
+                            src={logo}
                             alt="logo"
-                            width="100%"
-                            radius="md"
                         />
                     </Col>
                     <Col xs={8}>
-                        <Title mb="md">Hi there! 👋</Title>
-                        <Text mb="md" size="lg">
+                        <Title
+                            mb="md"
+                            data-aos="fade-up"
+                            data-aos-delay={AnimationDelay + 100}
+                            data-aos-duration="1000"
+                            style={{ fontSize: "clamp(40px, 8vw, 80px)" }}
+                        >
+                            Hi there! 👋
+                        </Title>
+                        <Text
+                            mb="md"
+                            size="xl"
+                            data-aos="fade-up"
+                            data-aos-delay={AnimationDelay + 200}
+                            data-aos-duration="1000"
+                        >
                             Hi, I am Soumen Khara a passionate self-taught full
                             stack web developer and a freelancer from India. I
                             have a passion for web design and love to create
                             things for web and mobile devices.
                         </Text>
-                        <List size="lg">
-                            <List.Item>
-                                🌱 I’m currently learning Blockchain
-                            </List.Item>
-                            <List.Item>
-                                👨‍💻 All of my projects are available at
-                                https://github.com/50UM3N
-                            </List.Item>
-                            <List.Item>💬 Ask me about Java Script</List.Item>
-                            <List.Item>
-                                📫 How to reach me soumen2015.s.k@gmail.com
-                            </List.Item>
-                        </List>
+                        <Group
+                            spacing="md"
+                            data-aos="fade-up"
+                            data-aos-delay={AnimationDelay + 300}
+                            data-aos-duration="1000"
+                        >
+                            <Button variant="outline">About</Button>
+                            <Button>Contact Me</Button>
+                        </Group>
                     </Col>
                 </Grid>
             </Container>
-            <Container my={64}>
+            <Container
+                my={64}
+                className="_pangolin__section__about"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+            >
                 <Title mb="md">About Me</Title>
                 <Grid gutter={32}>
                     <Col xs={8}>
@@ -169,11 +202,21 @@ const Home: React.FC = () => {
                     </Col>
 
                     <Col xs={4}>
-                        <Image radius="md" src="/me1x1.jpeg" alt="My Image" />
+                        <Image
+                            priority
+                            className={classes.image}
+                            src={me}
+                            alt="My Image"
+                        />
                     </Col>
                 </Grid>
             </Container>
-            <Container my={64}>
+            <Container
+                my={64}
+                className="_pangolin__section__career"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+            >
                 <Title mb="md">My Career So Far</Title>
 
                 <Grid gutter="md">
@@ -207,7 +250,12 @@ const Home: React.FC = () => {
                     </Col>
                 </Grid>
             </Container>
-            <Container my={64}>
+            <Container
+                my={64}
+                className="_pangolin__section__projects"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+            >
                 <Title mb="md">Projects</Title>
                 <Grid gutter="md">
                     <Col xs={6}>
@@ -224,11 +272,19 @@ const Home: React.FC = () => {
                     </Col>
                 </Grid>
             </Container>
-            <Container my={64}>
+            <Container
+                my={64}
+                className="_pangolin__section__contact"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+            >
                 <ContactUs socialLinks={socialLinks} />
             </Container>
             <Container
-                className={classes.floatSocialLinkContainer}
+                className={
+                    classes.floatSocialLinkContainer +
+                    " _pangolin__section__social_links"
+                }
                 p="md"
                 fluid
             >
@@ -240,7 +296,11 @@ const Home: React.FC = () => {
                     ))}
                 </Group>
             </Container>
-            <Footer links={links} socialLinks={socialLinks} />
+            <Footer
+                links={links}
+                socialLinks={socialLinks}
+                className="_pangolin__section__footer"
+            />
             <Affix position={{ bottom: 20, right: 20 }}>
                 <Transition transition="slide-up" mounted={scroll.y > 0}>
                     {(transitionStyles) => (

@@ -6,6 +6,7 @@ import {
     Header,
     Title,
 } from "@mantine/core";
+import { link } from "fs";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -84,43 +85,51 @@ const useStyles = createStyles((theme) => ({
 interface props {
     links: NavLinks;
     socialLinks: SocialLinks;
+    className: string;
 }
 
-const Nav: React.FC<props> = ({ links, socialLinks }) => {
+const Nav: React.FC<props> = ({ links, socialLinks, ...rest }) => {
     const router = useRouter();
     const { classes, cx } = useStyles();
     const items = links.map((link) => (
-        <div key={Math.random()}>
-            <Link href={link.link}>
-                <a
-                    className={cx(classes.link, {
+        <Link href={link.link} key={link.id}>
+            <a
+                className={
+                    "_header__nav__links " +
+                    cx(classes.link, {
                         [classes.linkActive]: router.pathname.includes(
                             link.link
                         ),
-                    })}
-                >
-                    {link.label}
-                </a>
-            </Link>
-        </div>
+                    })
+                }
+            >
+                {link.label}
+            </a>
+        </Link>
     ));
     return (
-        <Header height={56} mb="xl">
+        <Header height={56} mb="xl" {...rest}>
             <Container className={classes.inner}>
-                <Group className={classes.links} spacing={5}>
+                <Group className={classes.links + " _header__nav"} spacing={5}>
                     {items}
                 </Group>
 
-                <Title order={3}>Soumen Khara</Title>
+                <Title order={3} className="_header__title">
+                    Soumen Khara
+                </Title>
 
                 <Group
                     spacing={0}
-                    className={classes.social}
+                    className={classes.social + " _header__social"}
                     position="right"
                     noWrap
                 >
                     {socialLinks.map((socialLink) => (
-                        <ActionIcon key={Math.random()} size="lg">
+                        <ActionIcon
+                            key={socialLink.id}
+                            size="lg"
+                            className="_header__social__links"
+                        >
                             {socialLink.icon}
                         </ActionIcon>
                     ))}

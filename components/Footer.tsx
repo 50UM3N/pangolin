@@ -42,12 +42,13 @@ const useStyle = createStyles((theme) => ({
 interface props {
     links: NavLinks;
     socialLinks: SocialLinks;
+    className: string;
 }
 
-const Footer: React.FC<props> = ({ links, socialLinks }) => {
+const Footer: React.FC<props> = ({ links, socialLinks, className }) => {
     const { classes } = useStyle();
     return (
-        <footer className={classes.footer}>
+        <footer className={classes.footer + " " + className}>
             <Container py="xl">
                 <Group position="apart">
                     <Title order={3}>Soumen Khara</Title>
