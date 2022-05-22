@@ -37,9 +37,13 @@ import Image from "next/image";
 const AnimationDelay = 1000;
 
 const useStyle = createStyles((theme) => ({
+    imageWrapper: {
+        [theme.fn.smallerThan("xs")]: { maxWidth: "70%" },
+    },
     image: {
         borderRadius: theme.radius.md,
     },
+    grid: {},
     badge: {
         ".mantine-Badge-leftSection": {
             display: "flex",
@@ -123,20 +127,22 @@ const Home: React.FC = () => {
                 socialLinks={socialLinks}
                 className="_pangolin__section__header"
             />
-            <Container py={64} className="_pangolin__section__intro">
-                <Grid gutter={32}>
+            <Container className="_pangolin__section__intro _pangolin__page__section">
+                <Grid gutter={32} className={classes.grid}>
                     <Col
                         xs={4}
                         data-aos="fade-up"
                         data-aos-delay={AnimationDelay}
                         data-aos-duration="1000"
                     >
-                        <Image
-                            priority
-                            className={classes.image}
-                            src={logo}
-                            alt="logo"
-                        />
+                        <div className={classes.imageWrapper}>
+                            <Image
+                                priority
+                                className={classes.image}
+                                src={logo}
+                                alt="logo"
+                            />
+                        </div>
                     </Col>
                     <Col xs={8}>
                         <Title
@@ -173,8 +179,7 @@ const Home: React.FC = () => {
                 </Grid>
             </Container>
             <Container
-                my={64}
-                className="_pangolin__section__about"
+                className="_pangolin__section__about  _pangolin__page__section"
                 data-aos="fade-up"
                 data-aos-duration="1000"
             >
@@ -191,14 +196,6 @@ const Home: React.FC = () => {
                             temporibus illum fuga asperiores! Sunt, iste ratione
                             eum incidunt tempore quidem perspiciatis aliquam!
                         </Text>
-                        <Text>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing
-                            elit. Mollitia quaerat, vel deserunt placeat
-                            accusamus aut quod, cum adipisci possimus ut
-                            incidunt sequi ullam qui consectetur porro. Sit,
-                            quidem! Voluptatibus dicta perferendis tempore,
-                            vitae, accusamus perspiciatis consequatur
-                        </Text>
                     </Col>
 
                     <Col xs={4}>
@@ -212,8 +209,7 @@ const Home: React.FC = () => {
                 </Grid>
             </Container>
             <Container
-                my={64}
-                className="_pangolin__section__career"
+                className="_pangolin__section__career  _pangolin__page__section"
                 data-aos="fade-up"
                 data-aos-duration="1000"
             >
@@ -251,8 +247,7 @@ const Home: React.FC = () => {
                 </Grid>
             </Container>
             <Container
-                my={64}
-                className="_pangolin__section__projects"
+                className="_pangolin__section__projects _pangolin__page__section"
                 data-aos="fade-up"
                 data-aos-duration="1000"
             >
@@ -273,8 +268,7 @@ const Home: React.FC = () => {
                 </Grid>
             </Container>
             <Container
-                my={64}
-                className="_pangolin__section__contact"
+                className="_pangolin__section__contact _pangolin__page__section"
                 data-aos="fade-up"
                 data-aos-duration="1000"
             >

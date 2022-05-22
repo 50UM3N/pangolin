@@ -92,3 +92,11 @@ $transition_delay: 100ms;
     flex-direction: column;
     justify-content: center;
 }
+
+._pangolin__page__section {
+    margin: 64px 0;
+    @media (max-width: 574px) {
+        margin: 32px 0;
+        padding-inline: 8px;
+    }
+}
