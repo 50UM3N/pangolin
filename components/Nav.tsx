@@ -1,15 +1,18 @@
 import {
     ActionIcon,
+    Burger,
     Container,
     createStyles,
     Group,
     Header,
+    Paper,
+    Stack,
     Title,
 } from "@mantine/core";
 import { link } from "fs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
 const useStyles = createStyles((theme) => ({
     inner: {
@@ -35,13 +38,14 @@ const useStyles = createStyles((theme) => ({
         width: 260,
 
         [theme.fn.smallerThan("sm")]: {
+            display: "none",
             width: "auto",
             marginLeft: "auto",
         },
     },
 
     burger: {
-        marginRight: theme.spacing.md,
+        marginLeft: "auto",
 
         [theme.fn.largerThan("sm")]: {
             display: "none",
@@ -80,6 +84,27 @@ const useStyles = createStyles((theme) => ({
             ],
         },
     },
+    header: {
+        position: "relative",
+    },
+    mobileMenu: {
+        overflow: "hidden",
+        left: "50%",
+        transform: "translate(-50%,0%)",
+        opacity: 0,
+        visibility: "hidden",
+        height: "0px",
+        width: "100%",
+        position: "absolute",
+        zIndex: -1,
+        transition: "all 0.3s ease-in-out",
+    },
+    mobileMenuOpen: {
+        transform: "translate(-50%,0%)",
+        opacity: 1,
+        visibility: "visible",
+        height: "214px",
+    },
 }));
 
 interface props {
@@ -89,6 +114,7 @@ interface props {
 }
 
 const Nav: React.FC<props> = ({ links, socialLinks, ...rest }) => {
+    const [navOpen, setNavOpen] = useState(false);
     const router = useRouter();
     const { classes, cx } = useStyles();
     const items = links.map((link) => (
@@ -108,7 +134,7 @@ const Nav: React.FC<props> = ({ links, socialLinks, ...rest }) => {
         </Link>
     ));
     return (
-        <Header height={56} mb="xl" {...rest}>
+        <Header height={56} mb="xl" {...rest} className={classes.header}>
             <Container className={classes.inner}>
                 <Group className={classes.links + " _header__nav"} spacing={5}>
                     {items}
@@ -134,7 +160,35 @@ const Nav: React.FC<props> = ({ links, socialLinks, ...rest }) => {
                         </ActionIcon>
                     ))}
                 </Group>
+                <Burger
+                    opened={navOpen}
+                    onClick={() => setNavOpen(!navOpen)}
+                    className={classes.burger + " _header__social"}
+                />
             </Container>
+            <Paper
+                withBorder
+                p="lg"
+                className={cx(classes.mobileMenu, {
+                    [classes.mobileMenuOpen]: navOpen,
+                })}
+                shadow="lg"
+            >
+                <Stack align="center">
+                    {items}
+                    <Group spacing={0} position="right" noWrap>
+                        {socialLinks.map((socialLink) => (
+                            <ActionIcon
+                                key={socialLink.id}
+                                size="lg"
+                                className="_header__social__links"
+                            >
+                                {socialLink.icon}
+                            </ActionIcon>
+                        ))}
+                    </Group>
+                </Stack>
+            </Paper>
         </Header>
     );
 };

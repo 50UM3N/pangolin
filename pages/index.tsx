@@ -45,7 +45,14 @@ const useStyle = createStyles((theme) => ({
     image: {
         borderRadius: theme.radius.md,
     },
-    grid: {},
+    grid: {
+        "&>*": {
+            padding: 16,
+            [theme.fn.smallerThan("lg")]: {
+                padding: 8,
+            },
+        },
+    },
     badge: {
         ".mantine-Badge-leftSection": {
             display: "flex",
@@ -141,7 +148,7 @@ const Home: React.FC<props> = ({ repos }) => {
                 className="_pangolin__section__header"
             />
             <Container className="_pangolin__section__intro _pangolin__page__section">
-                <Grid gutter={32} className={classes.grid}>
+                <Grid className={classes.grid}>
                     <Col
                         xs={4}
                         data-aos="fade-up"
@@ -197,7 +204,7 @@ const Home: React.FC<props> = ({ repos }) => {
                 data-aos-duration="1000"
             >
                 <Title mb="md">About Me</Title>
-                <Grid gutter={32}>
+                <Grid className={classes.grid}>
                     <Col xs={8}>
                         <Text mb="md">
                             Lorem ipsum dolor sit, amet consectetur adipisicing
