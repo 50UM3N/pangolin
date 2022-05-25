@@ -94,9 +94,9 @@ $transition_delay: 100ms;
 }
 
 ._pangolin__page__section {
-    margin: 64px 0;
+    margin: 64px auto;
     @media (max-width: 574px) {
-        margin: 32px 0;
+        margin: 32px auto;
         padding-inline: 8px;
     }
 }

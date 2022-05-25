@@ -3,6 +3,7 @@ import {
     Affix,
     Badge,
     Button,
+    Center,
     Col,
     Container,
     createStyles,
@@ -21,6 +22,7 @@ import {
     BrandNextjs,
     BrandPhp,
     BrandReactNative,
+    BrandStackoverflow,
     CurrencyEthereum,
 } from "tabler-icons-react";
 import Nav from "../components/Nav";
@@ -62,7 +64,7 @@ const useStyle = createStyles((theme) => ({
         "&::before": {
             content: `""`,
             position: "absolute",
-            height: "100px",
+            height: "140px",
             width: "2px",
             background: theme.colors.gray[7],
             transform: "translateX(-50%)",
@@ -99,6 +101,12 @@ const socialLinks: SocialLinks = [
         url: "",
         icon: <BrandInstagram size={20} />,
     },
+    {
+        id: Math.random(),
+        name: "Stack Overflow",
+        url: "",
+        icon: <BrandStackoverflow size={20} />,
+    },
 ];
 
 const skills = [
@@ -112,14 +120,19 @@ const skills = [
 ];
 
 const links: NavLinks = [
-    { id: Math.random(), link: "/", label: "Home" },
     { id: Math.random(), link: "/about", label: "About" },
     { id: Math.random(), link: "/projects", label: "Project" },
+    { id: Math.random(), link: "/contact", label: "Contact" },
 ];
 
-const Home: React.FC = () => {
+interface props {
+    repos: any;
+}
+
+const Home: React.FC<props> = ({ repos }) => {
     const { classes } = useStyle();
     const [scroll, scrollTo] = useWindowScroll();
+
     return (
         <>
             <Nav
@@ -253,19 +266,22 @@ const Home: React.FC = () => {
             >
                 <Title mb="md">Projects</Title>
                 <Grid gutter="md">
-                    <Col xs={6}>
-                        <RepoCard />
-                    </Col>
-                    <Col xs={6}>
-                        <RepoCard />
-                    </Col>
-                    <Col xs={6}>
-                        <RepoCard />
-                    </Col>
-                    <Col xs={6}>
-                        <RepoCard />
-                    </Col>
+                    {repos.map((item: any) => (
+                        <Col key={item.node_id} xs={6}>
+                            <RepoCard repo={item} />
+                        </Col>
+                    ))}
                 </Grid>
+                <Center my="md">
+                    <Button
+                        variant="outline"
+                        component="a"
+                        href="https://github.com/50UM3N?tab=repositories"
+                        target="_blank"
+                    >
+                        More
+                    </Button>
+                </Center>
             </Container>
             <Container
                 className="_pangolin__section__contact _pangolin__page__section"
@@ -311,5 +327,17 @@ const Home: React.FC = () => {
         </>
     );
 };
-
+export const getStaticProps = async () => {
+    const res = await fetch(
+        "https://api.github.com/users/50UM3N/repos?per_page=1000"
+    );
+    let repos = await res.json();
+    repos.sort((a: any, b: any) => b.watchers - a.watchers);
+    repos = repos.sort((a: any, b: any) => b.watchers - a.watchers).slice(0, 6);
+    return {
+        props: {
+            repos,
+        },
+    };
+};
 export default Home;

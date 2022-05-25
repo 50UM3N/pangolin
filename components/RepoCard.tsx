@@ -18,6 +18,7 @@ const useStyle = createStyles((theme) => ({
         },
     },
     repo: {
+        height: "100%",
         "&:hover": {
             transform: "translateY(-5px)",
             ".repo-title": {
@@ -31,52 +32,71 @@ const useStyle = createStyles((theme) => ({
             userSelect: "none",
         },
     },
+    wrapper: {
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        justifyContent: "space-between",
+    },
 }));
 
-interface props {}
+interface props {
+    repo: any;
+}
 
-const RepoCard: React.FC<props> = ({}) => {
+const RepoCard: React.FC<props> = ({ repo }) => {
     const { classes } = useStyle();
     return (
-        <Paper withBorder p="md" className={classes.repo}>
-            <Group position="apart" mb="md">
-                <Text
-                    color="blue"
-                    size="xl"
-                    weight={600}
-                    className="repo-title"
-                >
-                    google-calculator
-                </Text>
-                <ActionIcon size="lg" variant="transparent">
-                    <BrandGithub />
-                </ActionIcon>
-            </Group>
-            <Text mb="md">
-                Simple Web Application that offer you to create video meeting
-                room using WebRTC and Socket.
-            </Text>
-            <Group>
-                <Badge variant="outline" color="gray">
-                    Javascript
-                </Badge>
-                <Badge
-                    color="gray"
-                    className={classes.badge}
-                    variant="outline"
-                    leftSection={<Star size={14} />}
-                >
-                    32
-                </Badge>
-                <Badge
-                    color="gray"
-                    className={classes.badge}
-                    variant="outline"
-                    leftSection={<GitFork size={14} />}
-                >
-                    32
-                </Badge>
-            </Group>
+        <Paper
+            withBorder
+            p="md"
+            className={classes.repo}
+            component="a"
+            href={repo.html_url}
+            target="_blank"
+        >
+            <div className={classes.wrapper}>
+                <div>
+                    <Group position="apart" mb="md">
+                        <Text
+                            color="blue"
+                            size="xl"
+                            weight={600}
+                            className="repo-title"
+                        >
+                            {repo.name}
+                        </Text>
+                        <ActionIcon size="lg" variant="transparent">
+                            <BrandGithub />
+                        </ActionIcon>
+                    </Group>
+                    <Text mb="md">{repo.description}</Text>
+                </div>
+                <Group>
+                    {repo.language && (
+                        <Badge variant="outline" color="gray">
+                            {repo.language}
+                        </Badge>
+                    )}
+
+                    <Badge
+                        color="gray"
+                        className={classes.badge}
+                        variant="outline"
+                        leftSection={<Star size={14} />}
+                    >
+                        {repo.watchers}
+                    </Badge>
+                    <Badge
+                        color="gray"
+                        className={classes.badge}
+                        variant="outline"
+                        leftSection={<GitFork size={14} />}
+                    >
+                        {repo.forks}
+                    </Badge>
+                </Group>
+            </div>
         </Paper>
     );
 };
